@@ -1,9 +1,11 @@
-// components/Auth/login/Login.js
+/* eslint-disable no-unused-vars */
+
 import React, { useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import './login.css';
+import { useParams } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -11,7 +13,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [msg, setMsg] = useState('');
   const navigate = useNavigate();
-
+  const [param]=useSearchParams();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -19,9 +21,13 @@ function Login() {
   const doLogin = (e) => {
     e.preventDefault();
     let token = window.btoa(username + ':' + password);
+    console.log('Request Headers:', {
+      'Authorization': 'Basic ' + token
+    })
+    
     axios.post('http://localhost:8182/auth/login', {}, {
-      headers: {
-        'Authorization': 'Basic ' + token
+       headers: {
+         'Authorization': 'Basic ' + token
       }
     })
       .then(function (response) {
@@ -41,13 +47,13 @@ function Login() {
         }
       })
       .catch(function (error) {
-        setMsg('Invalid Credintials');
-      });
-  };
+        setMsg('Invalid Credintials')
+      })
+  }
 
   return (
     <div style={{ 
-      backgroundImage: 'url("https://images.assetsdelivery.com/compings_v2/mrokibul/mrokibul2303/mrokibul230301332.jpg")', 
+      backgroundImage:  'url("https://th.bing.com/th?id=OSK.HEROocjiR_aWsPqAy8aUEsEhA9rA-6-pQaXH-d4uzWT36IA&w=384&h=228&c=1&rs=2&o=6&pid=SANGAM")', 
       backgroundSize: 'cover', 
       backgroundPosition: 'center', 
       minHeight: "100vh",

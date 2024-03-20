@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // HomeComponent.js
 import React, { useEffect, useState } from 'react';
 import { Button, Card, CardBody, CardHeader, CardSubtitle, CardText, CardTitle, Nav } from 'react-bootstrap';

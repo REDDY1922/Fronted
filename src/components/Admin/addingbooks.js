@@ -37,7 +37,11 @@ function AddingBook() {
     });
     console.log(Data);
     axios.post(`http://localhost:8182/Book/add/${id}`, Data)
-      .then(response => setBook(response.data))
+      .then(response => {
+        setBook(response.data);
+        // Navigate to admin dashboard with the admin ID
+        navigate(`/admin/dashboard/${id}`);
+      })
       .catch(error => console.error("Error adding book:", error));
 
   };
@@ -55,7 +59,7 @@ function AddingBook() {
             type="text"
             placeholder="Enter book title"
             name="bookTitle"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setBookTitle(e.target.value)}
           />
         </Form.Group>
@@ -66,7 +70,7 @@ function AddingBook() {
             type="text"
             placeholder="Enter author"
             name="author"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setAuthor(e.target.value)}
           />
         </Form.Group>
@@ -77,7 +81,7 @@ function AddingBook() {
             type="float"
             placeholder="Enter rating"
             name="rating"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setRating(e.target.value)}
           />
         </Form.Group>
@@ -88,7 +92,7 @@ function AddingBook() {
             type="text"
             placeholder="Enter category"
             name="category"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setCategory(e.target.value)}
           />
         </Form.Group>
@@ -99,7 +103,7 @@ function AddingBook() {
             type="text"
             placeholder="Enter number of copies"
             name="noOfCopies"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setNoOfCopies(e.target.value)}
           />
         </Form.Group>
@@ -110,7 +114,7 @@ function AddingBook() {
             type="text"
             placeholder="Enter ISBN"
             name="isbn"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setIsbn(e.target.value)}
           />
         </Form.Group>
@@ -122,7 +126,7 @@ function AddingBook() {
             rows={3}
             placeholder="Enter book description"
             name="bookDesc"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setBookDesc(e.target.value)}
           />
         </Form.Group>
@@ -134,7 +138,7 @@ function AddingBook() {
             rows={3}
             placeholder="Enter author description"
             name="authorDesc"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setAuthorDesc(e.target.value)}
           />
         </Form.Group>
@@ -145,16 +149,13 @@ function AddingBook() {
             type="number"
             placeholder="Enter book price"
             name="bookPrice"
-
+            style={{ border: '1px solid #ced4da', borderRadius: '0.25rem' }}
             onChange={(e) => setBookPrice(e.target.value)}
           />
         </Form.Group>
         <br />
         <Button variant="primary" type="submit">
           Submit
-        </Button>&nbsp;&nbsp;
-        <Button variant="primary" type="submit" >
-          Update
         </Button>
       </Form>
     </div>

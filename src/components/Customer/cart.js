@@ -1,17 +1,18 @@
+// Frontend: CartComponent.js
 import React, { useState } from "react";
 import { Button, Card, Row, Form, Modal } from "react-bootstrap";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import Navbarcomponent from "../navbar";
 import axios from "axios";
 
-function CartComponent({ cart, setCart }) {
+function CartComponent(props) {
+  const { cart, setCart } = props;
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [showForm, setShowForm] = useState(false);
   const [issueDate, setIssueDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
-  
 
   const handleButtonClick = () => {
     setShowForm(true);
@@ -26,10 +27,9 @@ function CartComponent({ cart, setCart }) {
       });
 
       if (response.status === 200) {
-         // Clear the cart after purchase
-        
-         setCart([]);
-          navigate(`/customer/dashboard/bookingStatus/${id}`);
+        // Clear the cart after purchase
+        setCart([]);
+        navigate(`/customer/dashboard/bookingStatus/${id}`);
       } else {
         console.error(`Error: ${response.data}`);
       }
@@ -40,33 +40,18 @@ function CartComponent({ cart, setCart }) {
     }
   };
 
-  // const totalPrice = cart.reduce((sum, book) => sum + book.bookPrice, 0);
-  // const totalBooks = cart.length;
-
   return (
-    <div style={{ 
-      padding: 20, 
-      minHeight: "100vh", 
-      fontFamily: "Arial, sans-serif", 
-      backgroundColor: "#f8f9fa", 
-      backgroundImage: 'url("https://img.freepik.com/premium-photo/book-stack-library-blurred-bookshelf-background-education-education-background-back_756748-17160.jpg")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    }}>
+    <div style={{ padding: 20, minHeight: "100vh", fontFamily: "Arial, sans-serif", backgroundColor: "#f8f9fa", backgroundImage: 'url("https://img.freepik.com/premium-photo/book-stack-library-blurred-bookshelf-background-education-education-background-back_756748-17160.jpg")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
       <Navbarcomponent /><br /><br /><br /><br /><br />
-      
       <br />
       <h2>Cart</h2>
       <div className="container col-md-8">
         <Row>
           {cart.map((book, index) => (
             <div key={index} className="col-md-4 mb-4">
-              <Card style={{ width: '400px', backgroundColor: '#your_card_background_color_here' }}>
-                <Card.Body style={{ backgroundColor: '#your_card_body_background_color_here' }}>
-                
-                    <Card.Title>{book.bookTitle}</Card.Title>
-               
+              <Card style={{ width: '400px', backgroundColor: "blue" }}>
+                <Card.Body style={{ backgroundColor: "white" }}>
+                  <Card.Title>{book.bookTitle}</Card.Title>
                   <hr />
                   <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
                     <div><span style={{ fontWeight: 'bold' }}>Rating:</span> {book.rating}</div>
@@ -77,10 +62,10 @@ function CartComponent({ cart, setCart }) {
                     <div><span style={{ fontWeight: 'bold' }}>Category:</span> {book.category.name}</div>
                     <div><span style={{ fontWeight: 'bold' }}>Price:</span> {book.bookPrice}</div>
                     <div>
-                              <Link to={'/books?id='+book.id} style={{ color: '#007bff' }}>
-                                Info
-                              </Link>
-                            </div>
+                      <Link to={'/books?id=' + book.id} style={{ color: '#007bff' }}>
+                        Info
+                      </Link>
+                    </div>
                     <Button onClick={() => setCart((prevCart) => prevCart.filter((item) => item.id !== book.id))}>
                       Remove from Cart
                     </Button>
@@ -101,7 +86,6 @@ function CartComponent({ cart, setCart }) {
                     <Modal.Title>Enter Details</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                  
                     <Form>
                       <Form.Group controlId="issueDate">
                         <Form.Label>Issue Date</Form.Label>
@@ -135,11 +119,26 @@ function CartComponent({ cart, setCart }) {
                 onClick={handleButtonClick}
                 type="button"
                 style={{ width: 200, alignSelf: "center", margin: 15 }}
-                class="btn btn-success btn-icon-text bouncebutton"
+                className="btn btn-success btn-icon-text bouncebutton"
                 variant="outline-primary"
               >
                 Purchase
               </Button>
+              <div style={{ textAlign: "center", marginTop: 20 }}>
+                <h4 style={{ fontWeight: "bold" }}>Pricing Methods</h4>
+                <p style={{ marginBottom: 5 }}>
+                  <span style={{ fontWeight: "bold" }}>First Week:</span> The charges are 0.2% of book price
+                </p>
+                <p style={{ marginBottom: 5 }}>
+                  <span style={{ fontWeight: "bold" }}>Second Week:</span> The charges are 0.4% of book price
+                </p>
+                <p style={{ marginBottom: 5 }}>
+                  <span style={{ fontWeight: "bold" }}>Third Week:</span> The charges are 0.6% of book price
+                </p>
+                <p style={{ marginBottom: 5 }}>
+                  <span style={{ fontWeight: "bold" }}>Fouth Week:</span> The charges are 0.8% of book price
+                </p>
+              </div>
             </div>
           </div>
         </Row>

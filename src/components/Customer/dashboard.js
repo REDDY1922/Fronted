@@ -57,6 +57,7 @@ function CustomerDashboard({ setCart }) {
   const handleBooks = (selectedBook) => {
     if (localStorage.getItem("isLoggedIn")) {
       addToCart(selectedBook);
+      navigate(`/book/cart/${id}`);
     } else {
       navigate("/auth/login");
     }

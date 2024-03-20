@@ -1,7 +1,6 @@
 // About.js
 import React from "react";
 import { Card, Row, Col } from "react-bootstrap";
-//import { FaInstagram, FaLinkedin, FaFacebook } from "react-icons/fa";
 import Navbarcomponent from "../navbar";
 
 const About = () => {

@@ -1,5 +1,4 @@
-
-
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import "./signup.css";
@@ -7,28 +6,19 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 
 function Signup() {
-  const [name,setName] = useState('');
-  const [contact,setContact] = useState('');
-  const [city,setCity] = useState('');
-  const [username,setUsername] = useState('');
-  const [password,setPassword] = useState('');
-  const [email,setEmail] = useState('');
-  const [showPassword,setShowPassword]=useState([]); 
-
-
-
-  const[customer,setCustomer]=useState({});
+  const [name, setName] = useState('');
+  const [contact, setContact] = useState('');
+  const [city, setCity] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [msg, setMsg] = useState('');
   const navigate = useNavigate();
-  const [msg,setMsg] = useState('');
   const contactRegex = /^[0-9]{10}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
-  
-
-  
-
-  const doSignUp=(e)=>{
+  const doSignUp = async (e) => {
     e.preventDefault();
     if (!contactRegex.test(contact)) {
       setMsg('Invalid contact number');
@@ -40,29 +30,29 @@ function Signup() {
       return;
     }
 
-    
-    let customerObj={
-      "name":name,
-      "contact":contact,
-      "email":email,
-      "city":city,
-      "user":{
-        "username":username,
-        "password":password
-
+    let customerObj = {
+      "name": name,
+      "contact": contact,
+      "email": email,
+      "city": city,
+      "user": {
+        "username": username,
+        "password": password
       }
+    };
 
+    try {
+      const response = await axios.post('http://localhost:8182/customer/post', customerObj);
+      navigate('/auth/login'); // Redirect to login page after successful signup
+    } catch (error) {
+      setMsg('Issue in processing sign up');
     }
-    axios.post('http://localhost:8182/customer/post',customerObj)
-        .then(response=>{
-            setCustomer(response.data)
-            navigate('/auth/login')
-        })
-        .catch(function(error){
-            setMsg('Issue in processing sign up')
-        })
+  };
 
-  }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="Signup-container">
       <Container>
@@ -84,7 +74,6 @@ function Signup() {
                         <Form.Label>Full Name</Form.Label>
                         <Form.Control type="text" name="name" onChange={(e) => setName(e.target.value)} required placeholder="Enter your name" />
                       </Form.Group>
-
                       <Form.Group className="mb-3" controlId="formNumber">
                         <Form.Label>Contact No</Form.Label>
                         <Form.Control type="text" name="contactno" onChange={(e) => setContact(e.target.value)} required placeholder="Enter your number" />
@@ -112,19 +101,16 @@ function Signup() {
                         <Form.Control type={showPassword? "text":"password"} onChange={(e) => setPassword(e.target.value)} required placeholder="Create password" />
                       
                       </Form.Group>
-
-                      
-
                       <div className="d-grid">
                         <Button className="Signup-btn" variant="primary" type="submit" onClick={doSignUp}>
-                          <a href="/">Sign Up</a>
+                          Sign Up
                         </Button>
-                      </div> 
+                      </div>
                     </Form>
                     <div className="mt-3">
                       <p className="mb-0 text-center">
                         Already have an account?{" "}
-                        <a href="/" className="text-primary fw-bold" onClick={() => navigate("/user/login")}>
+                        <a href="/auth/login" className="text-primary fw-bold">
                           Login
                         </a>
                       </p>

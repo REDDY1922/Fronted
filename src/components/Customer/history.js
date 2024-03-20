@@ -1,20 +1,26 @@
-import { useEffect, useState } from "react";
+// Frontend: PreviousOrders.js
+import React, { useEffect, useState } from "react";
 import Navbarcomponent from "../navbar";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import { useParams } from "react-router";
 
 function PreviousOrders() {
-  const { cid } = useParams();
-
+  const { customerId } = useParams();
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    if (!customerId) {
+      console.error("Error: customerId is undefined");
+      console.log("customerId:", customerId);
+      return;
+    }
+
     axios
-      .get(`http://localhost:8182/customerBook/customerid/${cid}`)
+      .get(`http://localhost:8182/customerBook/customerid/${customerId}`)
       .then((response) => setOrders(response.data))
       .catch((error) => console.error("Error fetching orders:", error));
-  }, [cid]);
+  }, [customerId]);
 
   const calculateTotalFine = () => {
     return orders.reduce((total, order) => total + order.amount, 0);
