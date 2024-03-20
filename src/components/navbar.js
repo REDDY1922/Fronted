@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Nav, Navbar, Button, Form } from 'react-bootstrap';
+import { Nav, Navbar, Button, Form, Modal } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Modal } from 'react-bootstrap';
 
 function Navbarcomponent() {
   const { id } = useParams();
@@ -9,7 +8,11 @@ function Navbarcomponent() {
   const navigate = useNavigate();
 
   const handlePreviousOrdersClick = () => {
-    navigate(`/previous_orders/${id}`);
+    if (localStorage.getItem('isLoggedIn')) {
+      navigate(`/previous_orders/${id}`);
+    } else {
+      navigate('/auth/login');
+    }
   };
 
   const handleBooks = () => {
@@ -29,8 +32,8 @@ function Navbarcomponent() {
   };
 
   const handleContactSubmit = () => {
-    // Handle contact form submission here
-    // You can send an email or integrate with a chat service like Intercom or Drift
+    // Handle chat submission here
+    // You can integrate with a chat service like Intercom or Drift
     setShowContactModal(false);
   };
 
@@ -76,10 +79,10 @@ function Navbarcomponent() {
         </Navbar.Collapse>
       </Navbar>
 
-      {/* Contact Modal */}
+      {/* Contact Modal (used as Chat Modal) */}
       <Modal show={showContactModal} onHide={handleCloseContactModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Contact Us</Modal.Title>
+          <Modal.Title>Chat with Us</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

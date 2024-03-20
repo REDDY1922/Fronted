@@ -8,7 +8,6 @@ import AdminNavbar from "./adminnavbar";
 
 function AddingBook() {
   const { id } = useParams();
- 
   const [book, setBook] = useState({})
   
   const [bookTitle, setBookTitle] = useState('');

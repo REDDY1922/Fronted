@@ -1,4 +1,3 @@
-// Frontend: CartComponent.js
 import React, { useState } from "react";
 import { Button, Card, Row, Form, Modal } from "react-bootstrap";
 import { useNavigate, useParams, Link } from "react-router-dom";

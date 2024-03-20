@@ -1,29 +1,34 @@
-// Frontend: PreviousOrders.js
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbarcomponent from "../navbar";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import { useParams } from "react-router";
 
 function PreviousOrders() {
-  const { customerId } = useParams();
+  const { cid } = useParams();
+
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    if (!customerId) {
-      console.error("Error: customerId is undefined");
-      console.log("customerId:", customerId);
-      return;
-    }
-
     axios
-      .get(`http://localhost:8182/customerBook/customerid/${customerId}`)
-      .then((response) => setOrders(response.data))
-      .catch((error) => console.error("Error fetching orders:", error));
-  }, [customerId]);
+      .get(`http://localhost:8182/customerBook/customerid/${cid}`)
+      .then((response) => {
+        const orders = response.data.map(order => ({
+          ...order,
+          amount: isNaN(order.amount)?0:parseFloat(order.amount)
+           // Convert amount to number
+        }));
+        setOrders(orders);
+      })
+      .catch((error) =>{
+         console.error("Error fetching orders.Error object:", error);
+      });
+  }, [cid]);
+  
 
   const calculateTotalFine = () => {
-    return orders.reduce((total, order) => total + order.amount, 0);
+    return orders.reduce((total, order) => total + parseFloat(order.amount), 0);
+    
   };
 
   return (

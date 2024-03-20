@@ -76,24 +76,24 @@ function Signup() {
                       </Form.Group>
                       <Form.Group className="mb-3" controlId="formNumber">
                         <Form.Label>Contact No</Form.Label>
-                        <Form.Control type="text" name="contactno" onChange={(e) => setContact(e.target.value)} required placeholder="Enter your number" />
+                        <Form.Control type="text" name="contactno" onChange={(e) => setContact(e.target.value)} required placeholder="Enter contact Number" />
                       </Form.Group>
 
                       <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="text" name="email" onChange={(e) => setEmail(e.target.value)} required placeholder="Enter your number" />
+                        <Form.Control type="text" name="email" onChange={(e) => setEmail(e.target.value)} required placeholder="Enter Email" />
                         
                       </Form.Group>
 
 
                       <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label>City / Town</Form.Label>
-                        <Form.Control type="text" name="city" onChange={(e) => setCity(e.target.value)} required placeholder="Enter your number" />
+                        <Form.Control type="text" name="city" onChange={(e) => setCity(e.target.value)} required placeholder="Enter city/Town" />
                       </Form.Group>
 
                       <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label>UserName</Form.Label>
-                        <Form.Control type="text" name="username" onChange={(e) => setUsername(e.target.value)} required placeholder="Enter your number" />
+                        <Form.Control type="text" name="username" onChange={(e) => setUsername(e.target.value)} required placeholder="Enter username" />
                       </Form.Group>
 
                       <Form.Group className="mb-3" controlId="formPassword">

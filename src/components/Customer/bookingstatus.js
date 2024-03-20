@@ -1,26 +1,23 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import Navbarcomponent from "../navbar";
 import axios from "axios";
-import { Card, Row } from "react-bootstrap";
+import { Card, Navbar, Row } from "react-bootstrap";
 import { Navigate, useParams } from "react-router";
 
 function BookingStatus() {
   const [customerBook, setCustomerBook] = useState([]);
-  const { cid } = useParams();
+  const { id } = useParams();
   const [totalBooks, setTotalBooks] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    console.log("cid:", cid);
-    axios.get(`http://localhost:8182/customerBook/customerid/${cid}`)
+    axios.get(`http://localhost:8182/customerBook/customerid/${id}`)
       .then((response) => {
         setCustomerBook(response.data);
         calculateTotals(response.data);
-        
       })
       .catch((error) => console.error("Error fetching customer books:", error));
-  }, [cid]);
+  }, [id]);
 
   const calculateTotals = (data) => {
     let uniqueBooks = new Set();
@@ -107,4 +104,4 @@ function BookingStatus() {
   );
 }
 
-export default BookingStatus;
+export default BookingStatus
